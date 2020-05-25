@@ -1,0 +1,40 @@
+.home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.detail {
+    background-color: white;
+    border: 2px solid black;
+    margin-bottom: 20px;
+}
+
+.navbar{
+    margin-bottom: 20px;
+}
+
+.student_course .printBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    text-align: center;
+}
+
+#dashboard .swipe{
+    visibility: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+    .home .img{
+        width: 290px;
+        height: 250px;
+    }
+    .student_course .printBtn{
+        visibility: hidden;
+    }
+    #dashboard .swipe{
+        visibility: visible;
+    }
+  }

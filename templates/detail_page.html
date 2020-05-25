@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <div class="text-dark detail" style="min-height: 100vh;">
+        {% for course in courses %}
+        <div class="text-center">
+            <h1>{{course.title}}</h1>
+            <p>Created By: {{course.author}} on {{course.issue_date}}</p>
+            <h4>About This Course: {{course.description}} </h4>
+        
+            <hr>
+            <div>{{course.body | safe}}</div> 
+        </div>                    
+        {% endfor %}
+    </div>
+{% endblock %}

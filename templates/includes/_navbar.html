@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/"><h3>OnlineEdSystem</h3></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <a class="nav-link" href="/"><h5>Home</h5><span class="sr-only"></span></a>
+            {% if session.logged_in %}
+            {% if session.role == 'Teacher' %}
+            <li class="nav-item">
+                <a class="nav-link" href="/add_course"><h5>Add Course</h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard"><h5>Dashboard</h5></a>
+            </li>
+            {% endif %}
+            {% if session.role == 'Student' %}
+            <li class="nav-item">
+                <a class="nav-link" href="/all_courses"><h5>Available Courses</h5></a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="/logout"><h5>Logout</h5><span class="sr-only"></span></a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="/signup"><h5>Sign Up</h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login"><h5>Login</h5><span class="sr-only"></span></a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

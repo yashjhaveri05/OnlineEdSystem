@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="student_course" style="min-height: 100vh;">
+    <div class="printBtn"><button class="btn btn-success" onclick="window.print()">Print</button></div>
+    <div class="text-dark detail">
+        {% for course in courses %}
+        <div class="text-center">
+            <h1>{{course.title}}</h1>
+            <p>Created By: {{course.author}} on {{course.issue_date}}</p>
+            <h4>About This Course: {{course.description}} </h4>
+        
+            <hr>
+            <div>{{course.body | safe}}</div> 
+        </div>                    
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h1 class="text-white">{{complaint.title}}</h1>
+<small class="text-white">Written by {{complaint.author}} on {{complaint.issue_date}}</small>
+<hr style="border-color: white;">
+<div class="text-white">
+    {{complaint.body | safe}}
+</div>
+<a class="btn btn-info mt-3" href="/dashboard">Dashboard</a>
+{% endblock %}
