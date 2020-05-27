@@ -193,13 +193,69 @@ def review_course(id):
 @is_logged_in
 def entered_course(id):
     cur = mysql.connection.cursor()
-    result = cur.execute("SELECT * FROM courseware WHERE id = %s", [id])
+    result = cur.execute(f"""
+                            SELECT
+                            users.name,
+                            student_courses.id,
+                            student_courses.status,
+                            student_courses.enroll_date,
+                            courseware.title,
+                            courseware.body,
+                            courseware.enroll_date,
+                            courseware.description,
+                            courseware.subject,
+                            courseware.issue_date,
+                            courseware.author
+                            FROM student_courses
+                            INNER JOIN courseware on courseware.id = student_courses.courseware_id
+                            INNER JOIN users on users.id = student_courses.user_id 
+                            WHERE student_courses.id = [id]
+                            """)
     courses = cur.fetchall()
     if result > 0:
         return render_template('student_course.html', courses=courses)
     else:
         msg = 'The Course is empty and cannot be reviewed'
         return render_template('index.html', msg=msg)
+    cur.close()
+
+@app.route('/enrolled/<string:id>', methods=['GET', 'POST'])
+@is_logged_in
+def enrolled(id):
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO student_courses(user_id, courseware_id) VALUES(%s, %s)",
+                    (session['userID'], [id]))
+    mysql.connection.commit()
+    cur.close()
+    if session['role'] == 'Student':
+        return redirect(url_for('index'))
+    return render_template('all_courses.html')
+
+@app.route('/my_courses')
+@is_logged_in
+def my_courses():
+    cur = mysql.connection.cursor()
+    result = cur.execute(f"""
+                            SELECT
+                            users.name,
+                            student_courses.status,
+                            student_courses.enroll_date,
+                            courseware.title,
+                            courseware.description,
+                            courseware.subject,
+                            courseware.issue_date,
+                            courseware.author
+                            FROM student_courses
+                            INNER JOIN courseware on courseware.id = student_courses.courseware_id
+                            INNER JOIN users on users.id = student_courses.user_id 
+                            WHERE users.id = {session['userID']}
+                            """)
+    courses = cur.fetchall()
+    if result > 0:
+        return render_template('my_courses.html', courses=courses)
+    else:
+        msg = 'You have not enrolled in any of the courses'
+        return render_template('all_courses.html', msg=msg)
     cur.close()
 
 @app.route('/edit_course/<string:id>', methods=['GET', 'POST'])

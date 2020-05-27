@@ -44,3 +44,15 @@ CREATE TABLE `users`
   PRIMARY KEY
 (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `student_courses`
+(
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `courseware_id` int DEFAULT NULL,
+  `status` varchar(10) default 'open',
+  `enroll_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`courseware_id`) REFERENCES `courseware`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);

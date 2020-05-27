@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block body %}
 <div class="text-dark" id="dashboard">
-    <h3 class="text-center"><u>Available Courses</u></h3>
+    <h3 class="text-center"><u>My Courses</u></h3>
     <p class="text-center swipe">Swipe to View the Course Material</p>   
     <hr>
     <div style="overflow-x:auto;">
@@ -11,7 +11,8 @@
             <th>Description</th>
             <th>Subject</th>
             <th>Author</th>
-            <th>Date</th>
+            <th>Date Of Issue</th>
+            <th>Enrolled At</th>
             <th></th>
         </tr>
         {% for course in courses %}
@@ -21,11 +22,11 @@
             <td> {{course.subject}} </td>
             <td> {{course.author}} </td>
             <td> {{course.issue_date}} </td>
-            <td><a href="enrolled/{{course.id}}" class="btn btn-info pull-right">Enroll Now</a></td>
+            <td> {{course.enroll_date}} </td>
+            <td><a href="enrolled/{{course.id}}" class="btn btn-info pull-right">View</a></td>
         </tr>
         {% endfor %}
     </table>
 </div>
 </div>
 {% endblock %}
-
