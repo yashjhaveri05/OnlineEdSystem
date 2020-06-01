@@ -5,7 +5,7 @@
     <p class="text-center swipe">Swipe to View the Course Material</p>   
     <hr>
     <div style="overflow-x:auto;">
-    <table class="table table-striped text-dark">
+    <table class="table table-striped text-dark bg-light">
         <tr>
             <th>Title</th>
             <th>Description</th>
@@ -13,6 +13,7 @@
             <th>Author</th>
             <th>Date Of Issue</th>
             <th>Enrolled At</th>
+            <th></th>
             <th></th>
         </tr>
         {% for course in courses %}
@@ -23,7 +24,13 @@
             <td> {{course.author}} </td>
             <td> {{course.issue_date}} </td>
             <td> {{course.enroll_date}} </td>
-            <td><a href="enrolled/{{course.id}}" class="btn btn-info pull-right">View</a></td>
+            <td><a href="entered_course/{{course.title}}" class="btn btn-success pull-right">View</a></td>
+            <td>
+                <form action="{{url_for('unenroll_course', id=course.id)}}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="UnEnroll" class="btn btn-danger">
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </table>

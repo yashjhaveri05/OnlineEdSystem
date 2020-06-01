@@ -11,14 +11,13 @@
 </head>
 
 <body>
-	<div class="bg-light" style="height: 100vh;">
+	<div class="green" style="min-height: 100vh;">
 		{% include 'includes/_navbar.html' %}
 		{% include 'includes/_messages.html' %}
 		<div class="container">
 			{% block body %}{% endblock %}
 		</div>
 	</div>
-	<script></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 		crossorigin="anonymous"></script>
@@ -30,11 +29,8 @@
 		crossorigin="anonymous"></script>
 	<script src="//cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 	<script type="text/javascript">
-	</script>
-	<script type="text/javascript">
 		CKEDITOR.replace('editor')
 	</script>
-
 </body>
 
 </html>

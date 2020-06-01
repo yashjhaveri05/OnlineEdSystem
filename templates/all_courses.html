@@ -5,7 +5,7 @@
     <p class="text-center swipe">Swipe to View the Course Material</p>   
     <hr>
     <div style="overflow-x:auto;">
-    <table class="table table-striped text-dark">
+    <table class="table table-striped text-dark bg-light">
         <tr>
             <th>Title</th>
             <th>Description</th>
@@ -21,11 +21,10 @@
             <td> {{course.subject}} </td>
             <td> {{course.author}} </td>
             <td> {{course.issue_date}} </td>
-            <td><a href="enrolled/{{course.id}}" class="btn btn-info pull-right">Enroll Now</a></td>
+            <td><a href="enrolled/{{course.id}}" class="btn btn-primary pull-right">Enroll Now</a></td>
         </tr>
         {% endfor %}
     </table>
 </div>
 </div>
 {% endblock %}
-

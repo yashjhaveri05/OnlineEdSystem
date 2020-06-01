@@ -1,20 +1,22 @@
 {% extends 'layout.html' %}
 {% block body %}
-<h1 class="text-dark text-center">Create CourseWare</h1>
-{% from "includes/_formhelpers.html" import render_field %}
-<form method="POST" action="">
-    <div class="form-group text-dark">
-        {{render_field(form.title, class_="form-control")}}
-    </div>
-    <div class="form-group text-dark">
-        {{render_field(form.subject, class_="form-control")}}
-    </div>
-    <div class="form-group text-dark">
-        {{render_field(form.description, class_="form-control")}}
-    </div>
-    <div class="form-group text-dark">
-        {{render_field(form.body, class_="form-control", id="editor")}}
-    </div>
-    <p class="text-center"><input type="submit" class="btn btn-info" value="Submit"></p>
-</form>
+<div class="add_course">
+    <h1 class="text-dark text-center">Create CourseWare</h1>
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method="POST" action="" class="form">
+        <h4 class="form-group text-dark">
+            {{render_field(form.title, class_="form-control")}}
+        </h4>
+        <h4 class="form-group text-dark">
+            {{render_field(form.subject, class_="form-control")}}
+        </h4>
+        <h4 class="form-group text-dark">
+            {{render_field(form.description, class_="form-control")}}
+        </h4>
+        <h4 class="form-group text-dark">
+            {{render_field(form.body, class_="form-control", id="editor")}}
+        </h4>
+        <p class="text-center"><input type="submit" class="btn btn-info" value="Submit"></p>
+    </form>
+</div>
 {% endblock %}

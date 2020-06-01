@@ -5,11 +5,12 @@
     <p class="text-center swipe">Swipe to Preview/Edit/Delete</p>   
     <hr>
     <div style="overflow-x:auto;">
-    <table class="table table-striped text-dark">
+    <table class="table table-striped text-dark bg-light">
         <tr>
             <th>Title</th>
             <th>Description</th>
             <th>Date</th>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -27,6 +28,7 @@
                     <input type="submit" value="Delete" class="btn btn-danger">
                 </form>
             </td>
+            <td><a href="enrolled_students/{{course.id}}" class="btn btn-primary pull-right">Enrolled Number</a></td>
         </tr>
         {% endfor %}
     </table>

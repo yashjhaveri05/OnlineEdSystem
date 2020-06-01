@@ -1,8 +1,30 @@
+.green{
+    background-color: #dff88b;
+}
+
+.white{
+    color: white;
+}
+
+#dashboard .table{
+    border: 4px solid black;
+}
+
+.add_course .form{
+    padding: 20px;
+    border: 4px solid black;
+}
+
 .home{
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
+}
+
+.home .img{
+    width: 1125px;
+    height: 500px;
 }
 
 .detail {

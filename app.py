@@ -111,6 +111,16 @@ def is_teacher(f):
             return redirect(url_for('add_complaint'))
     return wrap
 
+def is_student(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if session['role'] == 'Student':
+            return f(*args, **kwargs)
+        else:
+            flash('You are not a Student', 'danger')
+            return redirect(url_for('add_complaint'))
+    return wrap
+
 @app.route('/logout')
 @is_logged_in
 def logout():
@@ -134,6 +144,7 @@ def dashboard():
 
 @app.route('/all_courses')
 @is_logged_in
+@is_student
 def stud_courses():
     cur = mysql.connection.cursor()
     result = cur.execute(f"SELECT * FROM courseware")
@@ -189,38 +200,52 @@ def review_course(id):
         return render_template('dashboard.html', msg=msg)
     cur.close()
 
-@app.route('/entered_course/<string:id>', methods=['GET', 'POST'])
+@app.route('/entered_course/<string:title>', methods=['GET', 'POST'])
 @is_logged_in
-def entered_course(id):
+def entered_course(title):
     cur = mysql.connection.cursor()
-    result = cur.execute(f"""
-                            SELECT
+    result = cur.execute("""SELECT
                             users.name,
                             student_courses.id,
                             student_courses.status,
                             student_courses.enroll_date,
+                            courseware.id,
                             courseware.title,
-                            courseware.body,
-                            courseware.enroll_date,
                             courseware.description,
+                            courseware.body,
                             courseware.subject,
                             courseware.issue_date,
                             courseware.author
                             FROM student_courses
                             INNER JOIN courseware on courseware.id = student_courses.courseware_id
-                            INNER JOIN users on users.id = student_courses.user_id 
-                            WHERE student_courses.id = [id]
-                            """)
+                            INNER JOIN users on users.id = student_courses.user_id
+                            WHERE title = %s""", [title])
     courses = cur.fetchall()
     if result > 0:
-        return render_template('student_course.html', courses=courses)
+        return render_template('detail_page.html', courses=courses)
     else:
         msg = 'The Course is empty and cannot be reviewed'
         return render_template('index.html', msg=msg)
     cur.close()
 
+@app.route('/enrolled_students/<string:id>', methods=['GET', 'POST'])
+@is_logged_in
+@is_teacher
+def enrolled_students(id):
+    cur = mysql.connection.cursor()
+    result = cur.execute("SELECT COUNT(ID) from course.student_courses WHERE status = 'open' and courseware_id = %s", [id])
+    data = cur.fetchone()
+    total = data['COUNT(ID)']
+    if result>0:
+        return render_template('total.html', total=total)
+    else:
+        msg = 'No one has enrolled for this course yet!'
+        return render_template('dashboard.html', msg=msg)
+    cur.close()
+
 @app.route('/enrolled/<string:id>', methods=['GET', 'POST'])
 @is_logged_in
+@is_student
 def enrolled(id):
     cur = mysql.connection.cursor()
     cur.execute("INSERT INTO student_courses(user_id, courseware_id) VALUES(%s, %s)",
@@ -228,18 +253,22 @@ def enrolled(id):
     mysql.connection.commit()
     cur.close()
     if session['role'] == 'Student':
-        return redirect(url_for('index'))
+        flash('You are now enrolled for the course', 'success')
+        return redirect(url_for('my_courses'))
     return render_template('all_courses.html')
 
 @app.route('/my_courses')
 @is_logged_in
+@is_student
 def my_courses():
     cur = mysql.connection.cursor()
     result = cur.execute(f"""
                             SELECT
                             users.name,
+                            student_courses.id,
                             student_courses.status,
                             student_courses.enroll_date,
+                            courseware.id,
                             courseware.title,
                             courseware.description,
                             courseware.subject,
@@ -263,7 +292,7 @@ def my_courses():
 @is_teacher
 def edit_course(id):
     cur = mysql.connection.cursor()
-    result = cur.execute("SELECT * FROM courseware WHERE id = %s", [id])
+    cur.execute("SELECT * FROM courseware WHERE id = %s", [id])
     course = cur.fetchone()
     cur.close()
     form = CourseForm(request.form)
@@ -295,6 +324,7 @@ def edit_course(id):
 
 @app.route('/delete_course/<string:id>', methods=['POST'])
 @is_logged_in
+@is_teacher
 def delete_course(id):
     # Create cursor
     cur = mysql.connection.cursor()
@@ -312,6 +342,25 @@ def delete_course(id):
 
     return redirect(url_for('dashboard'))
 
+@app.route('/unenroll_course/<string:id>', methods=['POST'])
+@is_logged_in
+@is_student
+def unenroll_course(id):
+    # Create cursor
+    cur = mysql.connection.cursor()
+
+    # Execute
+    cur.execute("DELETE FROM student_courses WHERE id = %s", [id])
+
+    # Commit to DB
+    mysql.connection.commit()
+
+    #Close connection
+    cur.close()
+
+    flash('Unenrolled from course', 'success')
+
+    return redirect(url_for('my_courses'))
 
 if __name__ == '__main__':
     app.run(debug=True)
