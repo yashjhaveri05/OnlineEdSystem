@@ -36,13 +36,17 @@ def signup():
         password = sha256_crypt.encrypt(str(form.password.data))
 
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO users(name , email, role, username, password) VALUES(%s, %s, %s, %s, %s)",
+        result = cur.execute("SELECT * FROM users WHERE username=%s", [username])
+        if result > 0:
+            flash('The entered username already exists.Please try using another username.', 'info')
+            return redirect(url_for('signup'))
+        else:
+            cur.execute("INSERT INTO users(name , email, role, username, password) VALUES(%s, %s, %s, %s, %s)",
                     (name, email, role, username, password))
-        mysql.connection.commit()
-        cur.close()
-
-        flash('You are now registered and can log in', 'success')
-        return redirect(url_for('login'))
+            mysql.connection.commit()
+            cur.close()
+            flash('You are now registered and can log in', 'success')
+            return redirect(url_for('login'))
     return render_template('signUp.html', form=form)
 
 class LoginForm(Form):

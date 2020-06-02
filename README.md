@@ -1,7 +1,8 @@
 # A OnlineEdSystem Website
 
-> The website allows you register and create course related study material if you are logged in as a teacher or gives access to the courses if you are logged in as a student. 
+> The website allows you register and create course related study material if you are logged in as a teacher or gives access to the courses if you are logged in as a student.
 
+> *Open to any recommendations to make this website better and more functional*
 
 ## Requirements
 ```
@@ -59,40 +60,48 @@ Runs the app in the development mode.<br />
 
 <p align="center">Home Page</p>
 <p align="center">
- <img width=600px src="./static/1.png" alt="Home">
+ <img width=600px src="./static/home.png" alt="Home">
 </p>
 
 <p align="center">Sign Up Page-Two Types of Users: Either Student/Teacher</p>
 <p align="center">
- <img width=600px src="./static/2.png" alt="Home">
+ <img width=600px src="./static/signup.png" alt="Home">
 </p>
 
 <p align="center">Login Page</p>
 <p align="center">
- <img width=600px src="./static/3.png" alt="Home">
+ <img width=600px src="./static/login.png" alt="Home">
 </p>
 
 <p align="center">Teacher Login Dashboard</p>
 <p align="center">
- <img width=600px src="./static/5.png" alt="Home">
+ <img width=600px src="./static/teacher_dash.png" alt="Home">
 </p>
 
-<p align="center">Teacher Login Add Course</p>
+<p align="center">Teacher Add Course</p>
 <p align="center">
- <img width=600px src="./static/4.png" alt="Home">
+ <img width=600px src="./static/create.png" alt="Home">
 </p>
 
-<p align="center">Student Login DashBoard</p>
+<p align="center">Teacher View to see number of enrolled students for a particular course</p>
 <p align="center">
- <img width=600px src="./static/7.png" alt="Home">
+ <img width=600px src="./static/enrolled.png" alt="Home">
 </p>
 
-<p align="center">Course Detail Page(Student Login 'View Now')</p>
+<p align="center">Student Available Courses</p>
 <p align="center">
- <img width=600px src="./static/6.png" alt="Home">
+ <img width=600px src="./static/available.png" alt="Home">
 </p>
 
+<p align="center">Student Enrolled Courses</p>
+<p align="center">
+ <img width=600px src="./static/my_courses.png" alt="Home">
+</p>
 
+<p align="center">Course Detail Page</p>
+<p align="center">
+ <img width=600px src="./static/view.png" alt="Home">
+</p>
 
 ## App Info
 
